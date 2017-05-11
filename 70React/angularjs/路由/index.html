@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script src="../../../libs/angular/angular.min.js"></script>
+    <script src="../../../libs/angular-ui/angular-ui-router.min.js"></script>
+    <script src="controllers.js"></script> 
+</head>
+<body ng-app="myApp">
+    <h1>AngularJS Home Page (Ui-router Demonstration)</h1>
+    <!--a => pagetab.html = a = pagetab.html-->
+    <!-- 通过锚点的原理进行页面加载 -->
+    <a href="#/pagetab">pagetab</a>
+    <div data-ui-view="" style="border:solid 1px #ff0000;"></div>
+    
+    <script type="text/javascript">
+        var myApp = angular.module("myApp", ['ui.router']);
+        //声明了把 $stateProvider 和 $urlRouteProvider 路由引擎作为函数参数传入，这样我们就可以为这个应用程序配置路由了.
+        myApp.config(function ($stateProvider, $urlRouterProvider) {
+            //如果没有路由引擎能匹配当前的导航状态，那它就会默认将路径路由至 PageTab.html, 这个页面就是状态名称被声明的地方. 只要理解了这个，那它就像switch case语句中的default选项.
+            //$urlRouterProvider.when("", "/pagetab/:id");
+            //定义了会在main.html页面第一个显示出来的状态，作为页面被加载好以后第一个被使用的路由.
+            //这就向母版页的子页面，应用程序会首先加载这个main.html页面。
+            $stateProvider
+               .state("pagetab", {
+                   url: "/pagetab",//当 url 为#/pagetab
+                   templateUrl: "pagetab.html?_" + Math.random(),
+                   controller: 'pagetab'
+               })
+               .state("pagetab.page1", {
+                   url: "/page1/:params",
+                   templateUrl: "page1.html",
+                   controller: 'page1'
+               })
+               .state("pagetab.page2", {
+                   url: "/page2/:pageId",
+                   templateUrl: "page2.html",
+                   controller: 'controller2'
+               })
+               .state("pagetab.page3", {
+                   url: "/page3",
+                   templateUrl: "page3.html",
+                   controller: 'controller3'
+               });
+        });
+
+        myApp.controller('pagetab', function ($scope, $stateParams) {
+            $scope.name = 'fdasfdslafdsal';
+            console.log($stateParams.id);
+        })
+
+        myApp.controller('page1', function ($scope, $stateParams) {
+            $scope.name = 'dk-page1';
+            console.log($stateParams.params);
+        })
+
+    </script>
+</body>
+</html>

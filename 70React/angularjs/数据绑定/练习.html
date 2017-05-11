@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script src="angular.min.js"></script>
+</head>
+<body ng-app="twowayBindingTest" ng-controller="myController">
+    <div>
+        <p>Name:<input ng-model="stu.name"></input></p>
+        <p>Age:<input ng-model="stu.age"></input></p>
+        <input type="button" ng-click="addStudent(stu)" value="Add" />
+    </div>
+    <hr />
+    <div ng-repeat="stu in students">
+        <span ng-hide="editMode">{{stu.name}}</span>
+        <input type="text" ng-show="editMode" ng-model="stu.name" />
+
+        <span ng-hide="editMode">{{stu.age}}</span>
+        <input type="text" ng-show="editMode" ng-model="stu.age" />
+
+        <input type="button" value="Edit" ng-hide="editMode" ng-click="editMode = true" />
+        <input type="button" value="Save" ng-show="editMode" ng-click="editMode = false" />
+        <input type="button" value="Remove" ng-hide="editMode" ng-click="removeStudent($index)" />
+        <hr />
+    </div>
+
+    <script type="text/javascript">
+        (function () {
+            var app = angular.module('twowayBindingTest', []);
+
+            app.controller('myController', ['$scope', function ($scope) {
+                $scope.students = [];
+
+                $scope.addStudent = function (stu) {
+                    $scope.students.push(stu);
+                    $scope.stu = {};
+                };
+
+                $scope.removeStudent = function (index) {
+                    $scope.students.splice(index, 1);
+                };
+            }]);
+
+
+        })();
+    </script>
+</body>
+</html>

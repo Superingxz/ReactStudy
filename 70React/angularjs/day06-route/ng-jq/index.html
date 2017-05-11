@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <link href="../../../../libs/jquery-confirm/jquery-confirm.css" rel="stylesheet" />
+    <link href="../../../../libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="index.css" rel="stylesheet" />
+
+    <script src="../../../../libs/angular/angular.min.js"></script>
+    <script src="../../../../libs/jquery/jquery-2.1.1.min.js"></script>
+    <script src="../../../../libs/jquery-confirm/jquery-confirm.js"></script>
+    <script src="ng.global.js"></script>
+    <script src="index.js"></script>
+</head>
+<body ng-app="dkApp">
+    <div class="dk-header"></div>
+    <div class="dk-body">
+        <ul class="dk-menu list-group" ng-controller="dkController">
+            <li class="list-group-item" ng-repeat="m in menu"><a href="javascript:" ng-click="menuClick(m)" ng-bind="m.name"></a></li>
+        </ul>
+        <dkgrid></dkgrid>
+        <div class="dk-contianer"></div>
+    </div>
+    <div class="dk-footer"></div>
+</body>
+</html>

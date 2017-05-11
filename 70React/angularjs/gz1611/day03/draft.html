@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<script type="text/javascript" src="../../../../libs/angular/angular.min.js"></script>
+</head>
+<body ng-app="myApp" ng-controller="myController">
+	<script type="text/javascript">
+		function api(data){
+			console.log(data);
+			return {name: 'Tom'};
+		}
+		api
+		var myApp = angular.module('myApp', []);
+		myApp.controller('myController', ['$scope', '$http', function($scope, $http){
+			$http.jsonp('http://baike.baidu.com/api/openapi/BaikeLemmaCardApi?scope=103&format=json&appid=379020&bk_key=广西&bk_length=600&callback=JSON_CALLBACK').success(function(data){
+				console.log(data)
+			});
+
+            $http({
+                method: 'JSONP',
+                url: 'http://baike.baidu.com/api/openapi/BaikeLemmaCardApi?scope=103&format=json&appid=379020&bk_key=广东&bk_length=600&callback=JSON_CALLBACK',
+            }).success(function (msg) {
+                console.log(msg);
+            });			
+		}])
+	</script>
+</body>
+</html>

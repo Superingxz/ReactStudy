@@ -1,0 +1,38 @@
+﻿<!DOCTYPE>
+<html>
+<head>
+    <script src="../../../../libs/angular/angular.min.js"></script>
+    <script type="text/javascript">
+        (function () {
+            var app = angular.module('customValidationTest', []);
+
+            var INTEGER_REGEXP = /^\-?1\d{2}$/;
+            app.directive('myInteger', function () {
+                return {
+                    require: 'ngModel',
+                    link: function (scope, elm, attrs, ctrl) {
+                        ctrl.$validators.myInteger = function (modelValue, viewValue) {
+                            if (ctrl.$isEmpty(modelValue)) {
+                                return true;
+                            }
+
+                            if (INTEGER_REGEXP.test(viewValue)) {
+                                return true;
+                            }
+
+                            return false;
+                        };
+                    }
+                };
+            });
+
+        })();
+    </script>
+</head>
+<body ng-app="customValidationTest">
+    <form name="myForm" ng-submit="myForm.$valid" novalidate>
+        My integer:<input name="myInteger" ng-model="custInt" my-integer required />
+        <span ng-hide="myForm.myInteger.$pristine || myForm.myInteger.$valid" ng-show="myForm.myInteger.$invalid">My integer is required and should be the value 1xx.</span>
+    </form>
+</body>
+</html>

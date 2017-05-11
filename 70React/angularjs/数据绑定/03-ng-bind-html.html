@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script src="../../../../libs/angular/angular.min.js"></script>
+    <script src="../../../../libs/angular/angular-sanitize.min.js"></script>
+</head>
+<body ng-app="myApp" ng-controller="myCtrl">
+
+    <div ng-bind-html="note"></div>
+
+    <script type="text/javascript">
+        var app = angular.module('myApp', ['ngSanitize']);
+        app.controller('myCtrl', function ($scope) {
+            $scope.note = '<a href="#">点歌</a>';
+        })
+    </script>
+</body>
+</html>

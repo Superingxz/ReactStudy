@@ -1,0 +1,33 @@
+﻿<html ng-app="myApp">
+<head>
+    <title>angularjs-demo</title>
+    
+    <script src="angular.min.js"></script>
+</head>
+<body ng-controller="ctrl">
+    <table width="100%" border="1" cellspacing="0" cellpadding="0">
+        <tr>
+            <th>行号</th>
+            <th>学号</th>
+            <th>姓名</th>
+            <th>分数</th>
+        </tr>
+        <tr ng-repeat="item in items">
+            <td>{{$index + 1}}</td>
+            <td ng-bind="item.id"></td>
+            <td>{{item.name}}</td>
+            <td>{{item.score}}</td>
+        </tr>
+    </table>
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller("ctrl", function ($scope, $location) {
+            $scope.items = getStu();
+        });
+
+        function getStu() {
+            return [{ id: 1010, name: '张三', score: 50 }, { id: 1011, name: '李四', score: 60 }, { id: 1012, name: '王五', score: 80 }, { id: 1012, name: '王五', score: 90 }];
+        }
+    </script>
+</body>
+</html>

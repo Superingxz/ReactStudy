@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<script type="text/javascript" src="../../../../libs/angular/angular.min.js"></script>
+</head>
+<body ng-app="myApp" ng-controller="myController">
+	<input type="number" ng-model="x" ng-change="calc()"> = <span ng-bind="result"></span>
+	<script type="text/javascript">
+	var a = 10;
+	a = {};
+	a = function(){}
+		var myApp = angular.module('myApp', []);
+		myApp.filter('filterName', function(){});
+		myApp.factory('calcFactory', function(){
+			return {
+				calc: function(a, b){
+					return a * b;
+				}
+			}
+		});
+
+		myApp.service('CalcService', ['calcFactory', function (calcFactory) {
+			this.calc = function(a ,b){
+				return calcFactory.calc(a, b);
+			}
+		}]);
+
+		myApp.controller('myController', ['$scope', '$http', 'calcFactory', 'CalcService', function($scope, $http, calcFactory, CalcService){
+			$scope.x = 1;
+			$scope.result = calcFactory.calc($scope.x, $scope.x);
+			
+			$scope.calc = function(){
+				$scope.result = calcFactory.calc($scope.x, $scope.x);
+			}
+			//$http 服务就是 angularjs 对 XMLHttpRequest 对象封装出来的一个对象
+			//oop => 封装和继承
+			//$http.get();
+			//$http.post();
+			//$http.jsonp();
+			//请求头
+			//异步请求有两种方式：跨域，直接取
+			//异步 => 利用引用外部资源的方法去实现跨域请求
+			// $http({
+			// 	url: 'http://www.baidu.com',
+			// 	method: 'get', //get|post|jsonp
+			// 	data: {name: 'Tom', age: 18}, //作为请求信息数据进行传输
+			// 	params: {'_': Math.random()}//格式化成字符串并拼接到 url 以 get 参数请求
+			// }).success(function(response){
+			// 	console.log(response);
+			// })
+		}])
+	</script>
+</body>
+</html>

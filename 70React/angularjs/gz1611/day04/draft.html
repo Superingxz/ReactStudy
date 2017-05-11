@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<script type="text/javascript" src="../../../../libs/angular/angular.min.js"></script>
+</head>
+<body>
+	<script type="text/javascript">
+		var array = [{name: 'Tom', age: 18}, {name: 'Sam', age: 20}];
+
+		var myFilter = function(item){
+			console.log(item);
+		}
+
+		var filter = function(callback){
+			for(var i = 0; i < array.length; i++){
+				callback(array[i]);
+			}
+		}
+
+		filter(myFilter);
+	</script>
+</body>
+</html>

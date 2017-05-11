@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <script src="../../../libs/angular/angular.min.js"></script>
+    <script src="angular.global.js"></script>
+</head>
+<body ng-app="myApp" ng-controller="myCtrl">
+    <input type="text" ng-model="num1" ng-change="calc()"/> + 
+    <input type="text" ng-model="num2" ng-change="calc()" /> =
+    {{result}}
+    <h1>{{num1}}</h1>
+    <h1>{{num2}}</h1>
+    <h1>{{num1 * 1 + num2 * 1}}</h1>
+    <script type="text/javascript">
+        // 定义一个模块
+        var app = angular.module('myApp', ['globalapp']);
+
+        app.controller('myCtrl', ['calcFactory', '$scope', function (aa, dkScope) {
+            dkScope.num1 = 0;
+            dkScope.num2 = 0;
+            dkScope.result = dkScope.num1 * 1 + dkScope.num2 * 1;
+            //dkScope.result = aa.calc(dkScope.num1, dkScope.num2);
+            //aa => {calc:function(){}}; aa.calc()
+            //console.log(aa.calc(dkScope.num1, dkScope.num2));
+            dkScope.calc = function () {
+                dkScope.result = aa.calc(dkScope.num1, dkScope.num2);
+            }
+        }])
+
+        //app.controller('myCtrl', function ($scope, $http, calcFactory) {
+        //    $scope.num1 = 0;
+        //    $scope.num2 = 0;
+
+        //    $scope.result = calcFactory.calc($scope.num1, $scope.num2);
+
+        //    $scope.calc = function () {
+        //        $scope.result = calcFactory.calc($scope.num1, $scope.num2);
+        //    }
+        //})
+    </script>
+</body>
+</html>

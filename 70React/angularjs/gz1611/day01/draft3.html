@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<script type="text/javascript" src="../../../libs/angular/angular.min.js"></script>
+</head>
+<body ng-app="myApp" ng-controller="myController">
+	<input type="text" name="" ng-model="a" placeholder="" ng-change="calc()" /> +
+	<input type="text" name="" ng-model="b" placeholder="" ng-change="calc()"/> =
+	<span ng-bind="a * 1 + b * 1"></span>
+	<span ng-bind="result"></span>
+
+	<script type="text/javascript">
+		//M => V
+		//V => M
+		//ng-model => MVVM => 双向绑定的指令，作用于表单元素
+		var myApp = angular.module('myApp', []);
+		myApp.controller('myController', ['$scope', function($scope){
+			$scope.a = 1;
+			$scope.b = 2;
+			$scope.result = $scope.a * 1 + $scope.b * 1;
+
+			$scope.calc = function(){
+				$scope.result = $scope.a * 1 + $scope.b * 1;
+			}
+
+			$.ajax({
+				url: 'post.php',
+				data: {a: $scope.a, b: $scope.b},
+				success: function(){}
+			})
+		}]);
+
+		// $.post('post.php', {a: $('#a').val(), b: $('#b').val()})
+		$.ajax({
+			url: 'post.php',
+			data: {a: $('#a').val(), b: $('#b').val()},
+			success: function(){}
+		})
+	</script>
+</body>
+</html>

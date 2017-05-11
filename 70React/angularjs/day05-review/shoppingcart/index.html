@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <title>购物车</title>
+	<meta charset="utf-8" />
+    <link href="../../../../libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../../../libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="index.css" rel="stylesheet" />
+
+    <script src="../../../../libs/angular/angular.min.js"></script>
+    <script src="index.js"></script>
+</head>
+<body ng-app="dkApp" ng-controller="dkController">
+    <div class="dk-header">购物车</div>
+    <div class="dk-contianer">
+        <ul class="list-group">
+            <li ng-repeat="m in list" class="list-group-item" ng-click="liClick(m, $index, $event)">
+                <h3 ng-bind="m.name"></h3>
+                <em ng-bind="m.price"></em>
+                <div>
+                    <label><input type="checkbox" class="itemSelected" ng-checked="m.selected"/></label>
+                    <button class="itemMinus" ng-disabled="m.count < 2">-</button>
+                    <input type="text" ng-model="m.count"/>
+                    <button class="itemAdd">+</button>
+                    <button class="itemRemove">del</button>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="dk-footer">
+        <input type="checkbox"  ng-click="selectAll()" ng-checked="selectedCount == list.length"/>
+        <em ng-bind="totalAmount"></em>
+    </div>
+</body>
+</html>

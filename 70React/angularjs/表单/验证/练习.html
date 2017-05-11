@@ -1,0 +1,84 @@
+﻿<!DOCTYPE>
+<html>
+<head>
+    <style type="text/css">
+        .ng-invalid.ng-dirty {
+            border-color: #FA787E;
+        }
+
+        .ng-valid.ng-dirty {
+            border-color: #78FA89;
+        }
+
+        .ng-pristine.ng-pristine {
+            border-color: #ffd800;
+        }
+    </style>
+
+    <script src="../../../../libs/angular/angular.min.js"></script>
+    <script type="text/javascript">
+        (function () {
+            var app = angular.module('validationTest', []);
+
+            app.controller('myController', ['$scope', function ($scope) {
+                $scope.students = [];
+
+                $scope.addStudent = function (stu) {
+                    $scope.students.push(stu);
+                    $scope.stu = {};
+                };
+            }]);
+        })();
+    </script>
+</head>
+<body ng-app="validationTest" ng-controller="myController">
+    <form name="myForm" ng-submit="myForm.$valid && addStudent(stu)" novalidate>
+        Name:
+        <input name="name" ng-model="stu.name" required />
+        <span ng-hide="myForm.name.$pristine || myForm.name.$valid" ng-show="myForm.name.$invalid">Name is required.</span>
+        <br />
+        Age:
+        <input name="age" ng-model="stu.age" type="number" max="200" min="1" required />
+        <span ng-hide="myForm.age.$pristine || myForm.age.$valid" ng-show="myForm.age.$invalid">Age is required and should between 1-200.</span>
+        <br />
+        Sex:
+        <select name="sex" ng-model="stu.sex" required>
+            <option value="0">Male</option>
+            <option value="1">Female</option>
+        </select>
+        <span ng-hide="myForm.sex.$pristine || myForm.sex.$valid" ng-show="myForm.sex.$invalid">Sex is required.</span>
+        <br />
+        Email:
+        <input name="email" ng-model="stu.email" type="email" />
+        <span ng-hide="myForm.email.$pristine || myForm.email.$valid" ng-show="myForm.email.$invalid">Email is not correct.</span>
+        <br />
+        Blog:
+        <input name="blog" ng-model="stu.blog" type="url" />
+        <span ng-hide="myForm.blog.$pristine || myForm.blog.$valid" ng-show="myForm.blog.$invalid">Blog is not correct.</span>
+        <br />
+        Birthday:
+        <input name="birthday" ng-model="stu.birthday" type="datetime-local" />
+        <span ng-hide="myForm.birthday.$pristine || myForm.birthday.$valid" ng-show="myForm.birthday.$invalid">Birthday is not correct.</span>
+
+        <div>myForm.$valid is {{myForm.$valid}}</div>
+        <div>myForm.$invalid is {{myForm.$invalid}}</div>
+        <div>myForm.$pristine is {{myForm.$pristine}}</div>
+        <div>myForm.$dirty is {{myForm.$dirty}}</div>
+        <div>myForm.$submitted is {{myForm.$submitted}}</div>
+
+        <div>myForm.age.$error is {{myForm.age.$error}}</div>
+
+        <input type="submit" value="Submit" />
+    </form>
+    <hr />
+    <div ng-repeat="stu in students">
+        <span>Name:{{ stu.name }}</span>
+        <span>Age:{{ stu.age }}</span>
+        <span>Sex:{{ stu.sex == 0 ? "Male" : "Female" }}</span>
+        <span>Email:{{ stu.email }}</span>
+        <span>Blog:{{ stu.blog }}</span>
+        <span>Birthday:{{ stu.birthday }}</span>
+        <hr />
+    </div>
+</body>
+</html>

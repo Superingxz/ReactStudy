@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="../../../libs/angular/angular.min.js"></script>
+    <script src="common.js"></script>
+    <script src="datagrid.js"></script>
+    
+    <style type="text/css">
+        .highlight{background-color:#274ee4; color:#fff;}
+        span{border:solid 1px #ccc; padding: 5px; background:#e0dbdb; cursor:pointer;}
+        span.active{color:#ccc; cursor:not-allowed;}
+    </style>
+</head>
+<body ng-app="dkApp" ng-controller="dkController">
+    <table>
+        <thead>
+            <tr>
+                <td colspan="{{colspan + 1}}">
+                    <select ng-model="columnName" ng-change="filterChange()">
+                        <option value=""></option>
+                        <option ng-repeat="(key, value) in students[0]" ng-bind="key" value="{{key}}"></option>
+                    </select>
+                    <input type="text" ng-model="keyWord"  ng-change="filterChange()"/>
+                </td>
+            </tr>
+            <tr>
+                <th>行号</th>
+                <th ng-repeat="(key, value) in students[0]" ng-bind="key"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- class="{{student['projectname'].indexOf('网') > -1 ? highlight : ''}}" -->
+            
+            <tr ng-repeat="student in students | filter: myselt | limitTo : pagerows : (pageindex - 1) * pagerows" style="background-color: {{student['projectname'].indexOf('网') > -1 ? 'red' : ''}}">
+                <td ng-bind="$index + 1"></td>
+                <td ng-repeat="sdt in student" ng-bind="sdt"></td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="{{colspan + 1}}">
+                    <span ng-repeat="p in [] | range: pagecount" ng-bind="p" class="{{p == pageindex ? 'active' : ''}}" ng-click="page(p)"></span>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</body>
+</html>

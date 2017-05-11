@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="../../../../libs/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../../../../libs/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="main.css">
+
+	<script type="text/javascript" src="../../../../libs/angular/angular.min.js"></script>
+	<script type="text/javascript" src="../../../../libs/angular-ui/angular-ui-router.min.js"></script>
+	<script type="text/javascript" src="../../../../libs/jquery/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="global.js"></script>
+	<script type="text/javascript" src="main.js"></script>
+</head>
+<body ng-app="dkApp" ng-controller="dkController">
+	<div class="dk-container">
+		<div class="dk-header"></div>
+		<div class="dk-body">
+			<div class="dk-menu">
+				<ul class="list-group">
+					<li class="list-group-item"><a href="#homework" title="">homework</a></li>
+					<li class="list-group-item"><a href="#page1" title="">page1</a></li>
+					<li class="list-group-item"><a href="#page2" title="">page2</a></li>
+					<li class="list-group-item"><a href="#page3" title="">page3</a></li>
+				</ul>
+			</div>
+			<div class="dk-content" data-ui-view=""></div>
+		</div>
+		<div class="dk-footer">@dk</div>
+	</div>
+</body>
+</html>

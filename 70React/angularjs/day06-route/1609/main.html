@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="../../../../libs/angular/angular.min.js"></script>
+    <script src="../../../../libs/jquery/jquery-2.1.1.min.js"></script>
+</head>
+<body ng-app="mainApp">
+    <div class="main" ng-controller="mainController"></div>
+    <div id="subpage"></div>
+
+    <script type="text/javascript">
+        var mainApp = angular.module('mainApp', []);
+
+        mainApp.config(function ($controllerProvider, $filterProvider) {
+            mainApp.register = {
+                controller: $controllerProvider.register,
+                filter: $filterProvider.register
+            };
+        })
+
+        mainApp.controller('mainController', ['$scope', '$http', '$compile', function ($scope, $http, $compile) {
+            $http.get('subpage.html?_=' + Math.random()).success(function (response) {
+                //document.getElementById('subpage').innerHTML = response
+                //$compile(document.getElementById('subpage'))($scope);
+                $compile($('#subpage').html(response))($scope);
+            })
+        }])
+    </script>
+</body>
+</html>

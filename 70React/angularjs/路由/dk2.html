@@ -1,0 +1,10 @@
+﻿<h1>This is dk2 page</h1>
+
+<div ng-controller="dk2Controller">
+    <h2 ng-bind="name"></h2>
+</div>
+<script type="text/javascript">
+    mainApp.register.controller('dk2Controller', function ($scope) {
+        $scope.name = 'dk';
+    })
+</script>

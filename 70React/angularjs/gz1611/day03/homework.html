@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="../../../../libs/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../../../../libs/font-awesome/css/font-awesome.min.css">
+
+	<script type="text/javascript" src="../../../../libs/angular/angular.min.js"></script>
+	<script type="text/javascript" src="../../../../libs/jquery/jquery-2.1.1.min.js"></script>
+</head>
+<body ng-app="myApp" ng-controller="myController">
+	<input type="button" value="English" placeholder="" ng-model="head.lang" ng-click="change()">
+	<select ng-model="lang">
+		<option value="cn">中文</option>
+		<option value="en">英文</option>
+	</select>
+	
+  <select ng-model="columnName">
+    <option value=""></option>
+    <option ng-repeat="(key, value) in dataSource[0]" value="{{key}}" ng-bind="key"></option>}
+  </select>
+	<input type="text" name="" ng-model="keyword" placeholder="">
+
+	<div class="bs-example" data-example-id="contextual-table">
+	    <table class="table">
+	      <thead>
+	        <tr>
+	          <th>#</th>
+	          <!--dataSource[0] = {indexid: 72, account: "杨世雄", password: "bc01e392d42468a2d86c33895e640709", phone: "15542530715",…}-->
+	          <th ng-repeat="(key,value) in dataSource[0]" ng-bind="dictionary[lang][key] ? dictionary[lang][key] : key"></th>
+	        </tr>
+	      </thead>
+	      <tbody>
+	        <tr class="active" ng-repeat="row in dataSource | filter: myFilter | limitTo: pagerow : (page - 1) * pagerow">
+	          <th scope="row" ng-bind="$index + 1"></th>
+	          <td ng-repeat="(key, value) in row" ng-bind="value" ng-if="key.indexOf('time') == -1"></td>
+            <td ng-bind="row.createtime | date: 'yyyy年MM月dd日 hh点mm分ss秒'"></td>
+            <td ng-bind="row.updatetime | date: 'yyyy年MM月dd日 hh点mm分ss秒'"></td>
+	        </tr>
+	      </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="10">
+                <div>
+                    <ul class="pagination pagination-teal" ng-click="pagination($event)">
+                      <li class="disabled">
+                        <a href="#"><i class="fa fa-chevron-left"></i></a>
+                      </li>
+                      <li class="{{n + 1 == page ? 'active' : ''}}" ng-repeat="n in [] | rang: pagecount">
+                        <a href="#" ng-bind="$index + 1"></a>
+                      </li>
+                      <li>
+                        <a href="#"><i class="fa fa-chevron-right"></i></a>
+                      </li>
+                    </ul>
+                  </div>              
+            </td>
+          </tr>
+        </tfoot>
+	    </table>
+  	</div>
+
+  	<script type="text/javascript">
+  		  var myApp = angular.module('myApp', []);
+        myApp.filter('rang', function(){
+          return function(array, rang){
+            for(var i = 0; i < rang; i++){
+              array.push(i);
+            }
+            return array;
+          }
+        });
+  		  myApp.controller('myController', ['$scope', '$http', function($scope, $http){
+          
+          $scope.pagination = function(event){
+            //事件捕获
+            // console.log(event.target.innerHTML);
+            $scope.page = event.target.innerHTML;
+          }
+
+          $scope.pagerow = 5; //每页显示的行数
+          $scope.pagecount; //总页数
+          $scope.rowcount; //总行数
+          $scope.page = 1; //当前页码
+
+          $scope.myFilter = function(item){
+            // console.log(item);
+            // console.log(item[$scope.columnName]);
+            if($scope.columnName && $scope.keyword  && item[$scope.columnName] && (item[$scope.columnName] + '').indexOf($scope.keyword) > -1){
+              return item;
+            } else if(!$scope.columnName || !$scope.keyword){
+              return item;
+            }
+          }
+
+          $http.get('http://localhost/course/api/api/student/FetchAllStudent').success(function(response){
+      			$scope.dataSource = response.data;
+            $scope.rowcount = $scope.dataSource.length;
+            $scope.pagecount = Math.ceil($scope.rowcount / $scope.pagerow);
+      		});
+
+      		$scope.dictionary = {
+      			cn: {
+      				account: '帐号',
+      				createtime: '注册时间',
+      				indexid: '用户 ID',
+      				mail: '邮箱',
+      				phone: '手机',
+      				projectname: '项目名称',
+      				username: '用户名'
+      			},
+      			en: {
+      				account: 'Account',
+      				createtime: 'Create Time',
+      				indexid: 'Index ID',
+      				mail: 'Mail',
+      				phone: 'Phone',
+      				projectname: 'Project Name',
+      				username: 'User Name'
+      			}
+      		}
+      		$scope.lang = 'en';
+      }])
+  	</script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<script type="text/javascript" src="../../../../libs/angular/angular.min.js"></script>
+</head>
+<body ng-app="myApp" ng-controller="myController">
+	<h1>Key</h1>
+	<p ng-repeat="(a, b) in obj" ng-bind="a"></p>
+	<h1>Value</h1>
+	<p ng-repeat="(a1, b1) in obj" ng-bind="b1"></p>
+	<h2 ng-repeat="n in []"></h2>
+	<script type="text/javascript">
+		var myApp = angular.module('myApp', []);
+		myApp.controller('myController', ['$scope', function ($scope) {
+
+			$scope.obj = {
+				id: 1101,
+				name: '马云',
+				product: 'alipay',
+				qq: '马化腾',
+				wx: '张晓龙'
+			}
+
+			for(var aa in $scope.obj){
+				console.log(aa);
+				console.log($scope.obj[aa])
+			}
+		}])
+	</script>
+</body>
+</html>

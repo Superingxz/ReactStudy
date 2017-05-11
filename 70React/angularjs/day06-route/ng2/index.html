@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="../../../../libs/angular/angular.min.js"></script>
+</head>
+<body ng-app="dkApp" ng-controller="dkController">
+    <dk></dk>
+
+    <script type="text/javascript">
+        var dkApp = angular.module('dkApp', []);
+
+        dkApp.controller('dkController', function ($scope) {
+            $scope.name = 'dk.lan';
+        })
+
+        dkApp.directive('dk', function ($http, $compile) {
+            return {
+                link: function (scope, element, attrs) {
+                    element[0].innerHTML = '<h1 ng-bind="name"></h1>';
+                    $compile(element.contents())(scope);
+                }
+            }
+        })
+    </script>
+</body>
+</html>

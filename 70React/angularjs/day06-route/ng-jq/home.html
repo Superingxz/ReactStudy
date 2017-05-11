@@ -1,0 +1,11 @@
+﻿<div ng-controller="homeController">
+    <h1>This is home page</h1>
+    <h1 ng-bind="name">{{name}}</h1>
+</div>
+<script type="text/javascript">
+    dkApp.register.controller('homeController', function ($scope) {
+        //$scope.name = $scope.$parent.name;
+        $scope.name = "home";
+        console.log($scope);
+    });
+</script>

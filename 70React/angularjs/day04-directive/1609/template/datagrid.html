@@ -1,0 +1,16 @@
+﻿<div class="bs-example">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th dk-repeat="" ng-repeat="(columnName, columnValue) in students[0]" ng-bind="columnName">
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="student in students" ng-click="trClick(student, $index, $event)">
+                <td ng-bind="$index + 1"></td>
+                <td ng-repeat="std in student" ng-bind="std"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

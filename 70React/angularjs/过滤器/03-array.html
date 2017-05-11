@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <script src="../../../libs/angular/angular.min.js"></script>
+</head>
+<body ng-app="myApp">
+    <!-- 用法1（参数expression使用String） -->
+    <mark>用法1（参数expression使用String）</mark>
+    <div ng-init="myArr = [{name:'Tom', age:20}, {name:'Tom Senior', age:50}, {name:'May', age:21}, {name:'Jack', age:20}, {name:'Alice', age:22}]">
+        <!-- 参数expression使用String，将全文搜索关键字 'a' -->
+        <div ng-repeat="u in myArr" ng-if="u.name.indexOf('o') > -1">
+            <p>Name:{{u.name}}</p>
+            <p>Age:{{u.age}}</p>
+            <br />
+        </div>
+    </div>
+
+    <!-- 用法2（参数expression使用function） -->
+    <mark>用法2（参数expression使用function）</mark>
+    <div ng-controller="myCtr1" ng-init="myArr = [{name:'Tom', age:20}, {name:'Tom Senior', age:50}, {name:'May', age:21}, {name:'Jack', age:20}, {name:'Alice', age:22}]">
+        <!-- 参数expression使用String，将全文搜索关键字 'a' -->
+        <div ng-repeat="u in myArr | filter: myFilter ">
+            <p>Name:{{u.name}}</p>
+            <p>Age:{{u.age}}</p>
+            <br />
+        </div>
+    </div>
+
+    
+    <script type="text/javascript">
+        var app = angular.module('myApp', []);
+        app.controller('myCtr1', function ($scope) {
+
+            $scope.myFilter = function (item) {
+                //return item.age == 20;
+                if (item.age == 22) {
+                    return item;
+                }
+            }
+        })
+    </script>
+
+   
+    <!-- 用法3（参数expression使用object） -->
+    <mark>用法3（参数expression使用object）</mark>
+    <div ng-init="myArr = [{name:'Tom', age:20}, {name:'Tom Senior', age:50}, {name:'May', age:21}, {name:'Jack', age:20}, {name:'Alice', age:22}]">
+        <div ng-repeat="u in myArr | filter:{age: 21} ">
+            <p>Name:{{u.name}}</p>
+            <p>Age:{{u.age}}</p>
+            <br />
+        </div>
+    </div>
+
+    
+    <!-- 用法4（指定comparator为true或false）： -->
+    <mark>用法4（指定comparator为true或false）</mark>
+    <div ng-init="myArr = [{name:'我是英雄', age:20}, {name:'Tom Senior', age:50}, {name:'May', age:21}, {name:'Jack', age:20}, {name:'Alice', age:22}]">
+        Name: <input ng-model="yourName1" />
+        <!-- 指定comparator为false或者undefined，即为默认值可不传，将以大小写不敏感的方式匹配任意内容 -->
+        <!-- 可以试试把下面代码的comparator为true，true即大小写及内容均需完全匹配 -->
+        <!-- comparator => false(defalut) => 模糊查询 | true => 精确定查询 -->
+        <div ng-repeat="u in myArr | filter:{name: yourName1}:false ">
+            <p>Name: {{u.name}}</p>
+            <p>Age: {{u.age}}</p>
+            <br />
+        </div>
+    </div>
+
+    <!-- 用法5（指定comparator为function）： -->
+    <mark>用法5（指定comparator为function）</mark>
+    <div ng-controller="myCtr2" ng-init="myArr = [{name:'Tom', age:20}, {name:'Tom Senior', age:50}, {name:'May', age:21}, {name:'Jack', age:20}, {name:'Alice', age:22}]">
+        Name:<input ng-model="yourName2" />
+        <div ng-repeat="u in myArr | filter:{name:yourName2}:myComparator ">
+            <p>Name:{{u.name}}</p>
+            <p>Age:{{u.age}}</p>
+            <br />
+        </div>
+    </div>
+    <script type="text/javascript">
+        //参数 array：数组 =》 数据源|结果集
+        //参数 expression：表达式 => 对象|字符串|function
+        //参数 comparator：指定结果集是否模糊查询 => false(defalut) | true
+        function filter(array, expression, comparator) {
+            //case1： expression => string
+            var html = '';
+            for (var i = 0; i < array.length; i++) {
+                if (typeof expression == 'string') {
+                    //index => 0: array[i] = > {{name:'Tom', age:20}}
+                    for (var key in array[i]) {
+                        //key => name
+                        //index => 0: array[i][key] => Tom
+                        if (array[i][key].toString().indexOf(expression) > -1) {
+                            html += '<div>' + array[i].name + '</div>';
+                        }
+                    }
+                } else if (typeof expression == 'object') {
+                    //...
+                }
+                if (typeof comparator == 'function') {
+                    comparator();
+                }
+            }
+            console.log(html);
+        }
+
+        app.controller('myCtr2', function ($scope) {
+            // 先在Controller中定义function:myComparator, 此function将能匹配大小写不敏感的内容，但与comparator为false的情况不同的是，comparator必须匹配全文
+            $scope.myComparator = function (expected, actual) {
+                console.log(expected);
+                console.log(actual);
+                // equals 用于判断两个值是否相等
+                // return expected == actual
+                return angular.equals(expected.toLowerCase(), actual.toLowerCase());
+                //return expected.toLowerCase().indexOf(actual.toLowerCase()) > -1;
+            }
+        })
+    </script>
+</body>
+</html>

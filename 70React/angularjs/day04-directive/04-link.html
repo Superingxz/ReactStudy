@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="../../../libs/angular/angular.min.js"></script>
+</head>
+<body ng-app="dkApp">
+    <div ng-controller="dkController">
+        <div dklink=""></div>
+    </div>
+
+
+    <datagrid api="student/FetchAllStudent"></datagrid>
+
+    <script type="text/javascript">
+        var dkApp = angular.module('dkApp', []);
+
+        dkApp.directive('dklink', ['$http', '$compile', function ($http, $compile) {
+            return {
+                restrict: 'A',
+                template: '<h3 ng-bind="$parent.name"></h3>',
+                scope: {},
+                relace: false,
+                link: function (_scope) {
+                    _scope.name = "DK.Lan";
+                    console.log(_scope);
+                    //$compile()()
+                }
+            }
+        }])
+
+        dkApp.controller('dkController', function ($scope, $http) {
+            $scope.name = 'dk.lan';
+            console.log($scope);
+        })
+    </script>
+</body>
+</html>

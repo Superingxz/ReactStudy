@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>GZ-1606-用户中心</title>
+	<meta charset="utf-8" />
+
+    <!--plugin css-->
+    <link href="../../../libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../../libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <!--auto css-->
+    <link href="libs/css/users.css" rel="stylesheet" />
+
+    <!--plugin js-->
+    <script src="../../../libs/angular/angular.min.js"></script>
+    <!--auto js-->
+    <script src="libs/js/users.js"></script>
+    <script src="libs/js/angular.global.js"></script>
+</head>
+<body ng-app="dkApp" ng-controller="dkController">
+    <dkgrid api="http://localhost/course/api/api/student/FetchAllStudent"></dkgrid>
+</body>
+</html>

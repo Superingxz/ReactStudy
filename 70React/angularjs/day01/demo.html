@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" >
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <script src="angular.min.js"></script>
+        <script src="angular-sanitize.min.js"></script>
+        <script src="demo.js"></script>
+    </head>
+    <body  ng-app="myApp">
+        <div ng-controller="myController">
+            <div ng-bind="name" data-name="{{name}}"></div>
+            <p><input type="text" name="" value="" ng-model="name"></p>
+            <p><input type="text" name="" value="" ng-model="age"></p>
+            <button ng-click="click()">save</button>  
+            <div ng-bind-html="aTag"></div>
+            <img ng-src="{{imgSrc}}" ng-hide="isHide == true" alt="" style="width:300px;">
+            <h1 ng-bind="name" ng-if="isShow == true"></h1>    
+        </div>
+    </body>
+</html>

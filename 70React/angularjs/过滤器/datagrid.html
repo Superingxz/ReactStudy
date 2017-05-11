@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="../../../libs/angular/angular.min.js"></script>
+    <style type="text/css">
+        div{height: 48px;}
+        span{border:solid 1px #ccc; padding: 5px; background:#e0dbdb; cursor:pointer;}
+    </style>
+</head>
+<body ng-app="dkApp" ng-controller="dkController">
+    <!--<select>
+        <option value="1">男</option>
+        <option value="0">女</option>
+    </select>-->
+
+    <div>
+        <select ng-model="columnName" ng-change="columnNameChange($event)">
+            <option ng-repeat="(dkKey, dkValue) in dataSource[0]" value="{{dkKey}}" ng-bind="dkKey"></option>
+        </select>
+        <input type="text" ng-model="keyWord" ng-change="keyWordChange($event)" ng-blur="keyWordChange($event)"/>
+    </div>
+    <div ng-bind="'columnName：' + columnName + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; keyWord：' + keyWord"></div>
+    <div ng-repeat="data in dataSource | filter: dkSearch">
+        <span ng-bind="data.name"></span>
+        <span ng-bind="data.age"></span>
+    </div>
+
+    <script type="text/javascript">
+        var dkApp = angular.module('dkApp', []);
+        var dkController = dkApp.controller('dkController', ['$scope', function ($scope) {
+            $scope.dkSearch = function (param1) {
+                //console.log(arguments);
+                if ($scope.columnName) {
+                    if ((param1[$scope.columnName] + '').indexOf($scope.keyWord) > -1) {
+                        return param1;
+                    }
+                } else {
+                    return param1;
+                }
+            };
+
+            $scope.keyWordChange = function (evt) {
+                console.log(evt);
+            }
+
+            $scope.columnNameChange = function () {
+                console.log($scope.columnName);
+            }
+
+            $scope.dataSource = [
+                { name: 'dk1', age: 16 },
+                { name: 'dk2', age: 17 },
+                { name: 'dk3', age: 18 },
+                { name: 'dk4', age: 19 },
+                { name: 'dk5', age: 20 }
+            ]
+        }])
+    </script>
+</body>
+</html>

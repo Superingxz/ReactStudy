@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<script type="text/javascript" src="../../../../libs/angular/angular.min.js"></script>
+</head>
+<body ng-app="myApp" ng-controller="myController">
+	
+	<div jjk="死猴子"></div>
+	<jjk></jjk>
+	<div class="jjk"></div>
+
+	<dk a="1" b="2"></dk>
+	<div class="mask"></div>
+	<datagrid></datagrid>
+
+	<div dk-app-data="dk">
+		
+	</div>
+
+	<script type="text/javascript">
+		var myApp = angular.module('myApp', []);
+		// myApp.directive('datagrid', function(){
+		// 	return {
+		// 		restrict: 'E',
+		// 		template: '<table>',
+		// 		controler: function($scope, $http, baseUrl){
+		// 			$http.get(baseUrl + 'api'). success(function(response){
+		// 				$scope.datasource = response.data;
+						
+		// 			})
+		// 		}
+		// 	}
+		// })
+		
+		// myApp.directive('dkAppData')
+
+		//在 dom 节点中找到属性为 jjk 的元素，并把 template 赋值该元素
+		var html = ""
+		myApp.directive('jjk', function () {
+			return {
+				restrict: 'AEC', //$('div[jjk]').html('jjk is monkey')
+				template: '<h1 ng-bind="name"></h1>',
+				replace: false
+			};
+		})
+
+		myApp.directive('dk', function(){
+			return {
+				restrict: 'E', // $('dk').html('dk is hero')
+				templateUrl: 'templateUrl.html',
+				scope: true,
+				controller: function($scope, $http){
+					$scope.name = 'Sam';
+					console.log($scope);
+					console.log($scope.name);
+					console.log($scope.$parent.name);
+					console.log($http);
+					// 可以用 $http 发起 ajax 请求
+					// 一般用来操作 $scope
+				},
+				link: function($scope, $element, $attrs, $http){
+					//link 不能单儿发起 ajax 请求
+					//link 一般用来操作指令对应的节点元素
+					console.log('link');
+					console.log($element);
+					console.log($attrs.a);
+					console.log($http);
+				}				
+			}
+		});
+
+		myApp.directive('mask', function(){
+			return {
+				restrict: 'C', //$('.mask').html('mask is here')
+				template: 'mask is here'
+			}
+		})
+
+
+		myApp.controller('myController', ['$scope', function ($scope) {
+			$scope.name = 'Tom';
+		}])
+	</script>
+</body>
+</html>

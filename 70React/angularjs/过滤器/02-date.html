@@ -1,0 +1,14 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <script src="../../../libs/angular/angular.min.js"></script>
+</head>
+<body ng-app="">
+    <p>{{ '2015-05-20T03:56:16.887Z' | date:"MM/dd/yyyy h:mma"}}  <!--使用ISO标准日期格式--></p>
+    <p>{{ 1432075948123 | date:"MM/dd/yyyy h:mma"}} <!--使用13位（单位：毫秒）时间戳--></p>
+    <p>{{ 1432075948123 | date:"MM/dd/yyyy h:mma":"UTC"}} <!--指定timezone为UTC --></p>
+    <p>{{'04/07/2017' | date: 'yyyy年MM月dd日'}}</p>
+</body>
+</html>

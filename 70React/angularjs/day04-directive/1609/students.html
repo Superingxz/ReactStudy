@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+
+    <link href="../../../../libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../../../libs/jquery-confirm/jquery-confirm.css" rel="stylesheet" />
+    <link href="../../../../libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="libs/css/students.css" rel="stylesheet" />
+
+    <script src="../../../../libs/angular/angular.min.js"></script>
+    <script src="../../../../libs/jquery/jquery-2.1.1.min.js"></script>
+    <script src="../../../../libs/jquery-confirm/jquery-confirm.js"></script>
+    <script src="libs/js/common.js"></script>
+</head>
+<body ng-app="mainApp" ng-controller="mainController">
+    <datagrid api="student/FetchAllStudent" multiple="false" lang="cn" page="true" pagenumber="5"></datagrid>
+
+    <script type="text/javascript">
+        var mainApp = angular.module('mainApp', ['commonApp']);
+        mainApp.controller('mainController', function ($scope, $http) {
+            $http.get('libs/dictionary/dictionary.txt').success(function (response) {
+                $scope.dictionary = response;
+            })
+        })
+    </script>
+</body>
+</html>

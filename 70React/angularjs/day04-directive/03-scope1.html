@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="../../../libs/angular/angular.min.js"></script>
+</head>
+<body ng-app="dkApp" ng-controller="dkController">
+
+    父亲:{{name}}<input ng-model="name" /> 
+    <div example-dk></div>
+
+
+    <script type="text/javascript">
+        var app = angular.module('dkApp', []);
+
+        app.directive('exampleDk', function () {
+            return {
+                restrict: 'AEC',
+                template: '<div>儿子:{{ name }}<input ng-model="name"/></div>',
+                transclude: true,
+                scope: {},
+                replace: false//true
+            }
+        })
+
+        app.controller('dkController', function ($scope, $http) {
+            //$scope.name = 'dk.lan';
+        })
+    </script>
+</body>
+</html>

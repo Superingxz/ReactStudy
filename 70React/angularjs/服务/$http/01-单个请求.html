@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <link href="../../../../libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../../../libs/angular/angular.min.js"></script>
+    <script src="../../../../libs/jquery/jquery-2.1.1.min.js"></script>
+    
+</head>
+<body ng-app="myApp" ng-controller="myCtrl">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>name</th>
+                <th>age</th>
+                <th>email</th>
+                <th>phone</th>
+                <th>country</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="tr in trs" ng-class-odd="'success'">
+                <td ng-bind="$index + 1"></td>
+                <td ng-bind="tr.name"></td>
+                <td ng-bind="tr.age"></td>
+                <td ng-bind="tr.email"></td>
+                <td ng-bind="tr.phone"></td>
+                <td ng-bind="tr.country"></td>
+            </tr>
+        </tbody>
+    </table>
+    <script type="text/javascript">
+
+        //$(function () {
+        //    //1、统一显示和隐藏遮罩层
+        //    //2、统一处理错误信息
+        //    //3、可以统一处理 url
+            
+        //    $(document).ajaxSend(function () {
+        //        console.log('显示遮罩层');
+        //        //$('').show();
+        //    }).ajaxComplete(function () {
+        //        console.log('隐藏遮罩层');
+        //        //console.log(arguments);
+        //        //$('').hide();
+        //    }).ajaxError(function () {
+        //        console.log('统一处理错误信息');
+        //    }).ajaxSuccess(function () {
+        //        console.log("统一处理成功信息");
+        //    })
+
+        //    $.get('../data/student2.txt', function (response) {
+        //        //console.log(arguments);
+        //    })
+        //})
+
+        //$.ajax({});
+        //$.post('../data/student.txt', { name: 'dk.lan', age: 18 }, function () {
+        //    console.log(123);
+        //});
+        //$.post();
+
+        var app = angular.module('myApp', []);
+        //$controllerProvider
+        app.controller('myCtrl', function ($scope, $http) {
+            //return false;
+            $http.get('../data/student.txt', { params: { "name": "dk" } }).success(function (data, status, headers, config, statustext) {
+                //console.log(config);
+                $scope.trs = data;
+            });
+
+            //$http({
+            //    url: '../data/student.txt',
+            //    method: 'post',
+            //    data: {name: 'dk.lan', age: 18}
+            //}).success(function (response) {
+            //    $scope.trs = response;
+            //    console.log(response);
+            //})
+        })
+
+        app.config(["$httpProvider", function ($httpProvider) {
+            $httpProvider.interceptors.push(function ($rootScope, $q) {
+                return {
+                    'request': function (config) {
+                        console.log('request');
+                        return config || $q.when(config);
+                    },
+                    'requestError': function (rejection) {
+                        console.log('requestError');
+                        return rejection;
+                    },
+                    'response': function (response) {
+                        console.log('response');
+                        return response || $q.when(response);
+                    },
+                    'responseError': function (response) {
+                        console.log('responseError');
+                        return $q.reject(response);
+                    }
+                };
+            });
+        }]);
+    </script>
+</body>
+</html>

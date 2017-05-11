@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="../../../libs/angular/angular.min.js"></script>
+</head>
+<body ng-app="dkApp" ng-controller="dkController">
+
+    <div example-dk title="Links">
+        <h2>原始的内容，</h2>
+        <h2>还会在这里。</h2>
+    </div>
+
+
+    <script type="text/javascript">
+        var app = angular.module('dkApp', []);
+
+        app.directive('exampleDk', function () {
+            return {
+                restrict: 'AEC',
+                template: '<div>Hi there <span ng-transclude></span></div>',
+                transclude: true,
+                replace: false//true
+            }
+        })
+
+        app.controller('dkController', function ($scope, $http) {
+        })
+    </script>
+</body>
+</html>

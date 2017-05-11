@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="../../../../libs/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../../../../libs/font-awesome/css/font-awesome.min.css">
+
+	<script type="text/javascript" src="../../../../libs/angular/angular.min.js"></script>
+	<script type="text/javascript" src="../../../../libs/jquery/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="global.js"></script>
+  <script type="text/javascript" src="homework.js"></script>
+  <style type="text/css" media="screen">
+    .mask{display: none; position: fixed; left: 0; top: 0; right: 0; bottom: 0; background-color: #000; opacity: 0.3; z-index: 99; font-size: 38px;}
+    .mask>i{display: block; position: absolute; left: 50%; top: 50%; z-index: 1000;}
+  </style>
+</head>
+<body ng-app="homeworkApp" ng-controller="homworkController">
+  <div class="mask"><i class="fa fa-spinner fa-spin"></i></div>
+
+	<select ng-model="lang">
+		<option value="cn">中文</option>
+		<option value="en">英文</option>
+	</select>
+	
+  <select ng-model="columnName">
+    <option value=""></option>
+    <option ng-repeat="(key, value) in dataSource[0]" value="{{key}}" ng-bind="key"></option>}
+  </select>
+	<input type="text" name="" ng-model="keyword" placeholder="">
+
+	<div class="bs-example" data-example-id="contextual-table">
+	    <table class="table">
+	      <thead>
+	        <tr>
+	          <th>#</th>
+	          <th ng-repeat="(key,value) in dataSource[0]" ng-bind="dictionary[lang][key] ? dictionary[lang][key] : key"></th>
+	        </tr>
+	      </thead>
+	      <tbody>
+	        <tr class="active" ng-repeat="row in dataSource | filter: myFilter | limitTo: pagerow : (page - 1) * pagerow">
+	          <th scope="row" ng-bind="$index + 1"></th>
+	          <td ng-repeat="(key, value) in row" ng-bind="value" ng-if="key.indexOf('time') == -1"></td>
+            <td ng-bind="row.createtime | date: 'yyyy年MM月dd日 hh点mm分ss秒'"></td>
+            <td ng-bind="row.updatetime | date: 'yyyy年MM月dd日 hh点mm分ss秒'"></td>
+	        </tr>
+	      </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="10">
+                <div>
+                    <ul class="pagination pagination-teal" ng-click="pagination($event)">
+                      <li class="disabled">
+                        <a href="#"><i class="fa fa-chevron-left"></i></a>
+                      </li>
+                      <li class="{{n + 1 == page ? 'active' : ''}}" ng-repeat="n in [] | range: pagecount">
+                        <a href="#" ng-bind="$index + 1"></a>
+                      </li>
+                      <li>
+                        <a href="#"><i class="fa fa-chevron-right"></i></a>
+                      </li>
+                    </ul>
+                  </div>              
+            </td>
+          </tr>
+        </tfoot>
+	    </table>
+  	</div>
+</body>
+</html>

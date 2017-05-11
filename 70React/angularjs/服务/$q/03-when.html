@@ -1,0 +1,28 @@
+﻿<html ng-app="myApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="../../../../libs/angular/angular.min.js"></script>
+</head>
+<body>
+    <div ng-controller="myctrl">
+        {{test}}
+    </div>
+    <script type="text/javascript">
+        var myAppModule = angular.module("myApp", []);
+        myAppModule.controller("myctrl", ["$scope", "$q", function ($scope, $q) {
+            $scope.test = 1;//这个只是用来测试angularjs是否正常的，没其他的作用
+
+            //when方法中可以传入一个参数，这个参数可能是一个值，可能是一个符合promise标准的外部对象。
+            //当传入的参数不确定时，可以使用这个方法。
+            var funcA = function () {
+                console.log("funcA");
+                return "hello,funA";
+            }
+            $q.when(funcA())
+            .then(function (result) {
+                console.log(result);
+            });
+        }]);
+    </script>
+</body>
+</html>

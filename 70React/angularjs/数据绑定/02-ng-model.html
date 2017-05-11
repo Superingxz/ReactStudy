@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script src="angular.min.js"></script>
+</head>
+<body ng-app="myApp" ng-controller="myCtrl">
+    <div>
+        <input type="text" ng-bind="number.num1" />
+        +
+        <input type="text" ng-bind="number.num2" />
+        =
+        <em>{{number.num1 * 1 + number.num2 * 1}}</em>
+    </div>
+    <h1 ng-bind="number.num1"></h1>
+    <!--<button ng-click="change">change</button>-->
+    <script type="text/javascript">
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function ($scope) {
+            $scope.number = {num1: 0, num2: 0};
+        })
+    </script>    
+</body>
+</html>

@@ -1,0 +1,21 @@
+﻿<button ng-click="ngClone()">克隆</button>
+<div class="bs-example">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>行号</th>
+                <!--[{key: 'indexid', dictionary: 'ID'}, {key: 'account', dictionary: '帐户'}]-->
+                <th ng-repeat="m in columns" ng-bind="m.dictionary"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <!--[{indexid: 1, account: 'dk1'}, {indexid: 2, account: 'dk2'}]-->
+            <tr ng-repeat="m in models track by $index" api="http://localhost/course/api/api/student/FetchAllStudent" ng-click="trClick(m, $index, $event)" ng-class="m.trSelected ? 'tr-selected' : ''" dk>
+                <td ng-bind="$index + 1"></td>
+                <!--c.key => indexid => var obj = {indexid: 1, account: 'dk1'}; obj.indexid => 1-->
+                <!--c.key => account => var obj = {indexid: 2, account: 'dk2'}; obj.indexid => 2-->
+                <td ng-repeat="c in columns" ng-bind="m[c.key]"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

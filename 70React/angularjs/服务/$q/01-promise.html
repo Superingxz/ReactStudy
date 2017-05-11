@@ -1,0 +1,58 @@
+﻿<html ng-app="myApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="../../../../libs/angular/angular.min.js"></script>
+</head>
+<body>
+    <div ng-controller="myctrl">
+        {{test}}
+    </div>
+    <script type="text/javascript">
+        var myAppModule = angular.module("myApp",[]);
+        myAppModule.controller("myctrl",["$scope","$q",function($scope, $q ){
+            $scope.test = 1;//这个只是用来测试angularjs是否正常的，没其他的作用
+
+            //用于创建一个deferred对象
+            var defer1 = $q.defer();
+            //返回一个promise对象，来定义then方法
+            var promise1 = defer1.promise;
+
+            //then中有三个参数，分别是成功回调、失败回调、状态变更回调。
+            //参数1：成功，参数2：错误， 参数3：notify
+            //所有参数都是一个回调函数
+            promise1.then(param1, param2, param3).finally(param1);
+            promise1
+            .then(function(value){
+                console.log("in promise1 ---- success");
+                console.log(value);
+            },function(value){
+                console.log("in promise1 ---- error");
+                console.log(value);
+            },function(value){
+                console.log("in promise1 ---- notify");
+                console.log(value);
+            })
+            .catch(function(e){
+                console.log("in promise1 ---- catch");
+                console.log(e);
+            })
+            .finally(function(value){
+                console.log('in promise1 ---- finally');
+                console.log(value);
+            });
+
+            //resolve中传入的变量或者函数返回结果，会当作第一个then方法的参数。then方法会返回一个promise对象，因此可以写成
+            /*
+                promise1
+                .then(a,b,c)
+                .then(a,b,c)
+                .then(a,b,c)
+                .catch()
+                .finally()           
+            */
+            defer1.resolve("hello");
+            //defer1.reject("sorry,reject");
+        }]);
+    </script>
+</body>
+</html>

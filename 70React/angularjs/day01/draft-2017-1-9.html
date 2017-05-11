@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="angular.min.js"></script>
+</head>
+<!-- 一个页面有且仅有一个 ng-app 的指令，其它指令可以有多个 -->
+<body ng-app="dkApp">
+    <div  ng-controller="dkController">
+        <div ng-bind="name"></div>
+        <div ng-bind="age"></div>
+        <div ng-bind="obj.name" productid="{{name}}"></div>
+    </div>
+    <!--<div ng-controller="dkController2">
+        <div ng-bind="name"></div>
+        <div ng-bind="age"></div>
+        <div ng-bind="obj.name"></div>
+    </div>-->
+
+    <script type="text/javascript">
+        //定义一个 angular 的模块
+        var dkApp = angular.module("dkApp", []);
+
+        //控制器 -> 实现业务逻辑（要用对象（Model））
+        var dkController = dkApp.controller('dkController', function ($scope) {
+            //$scope 是一个对象,也就是一个 Model(M)
+            $scope.name = 'dk.lan';
+            $scope.age = 16;
+            $scope.obj = { name: 'dk', age: 16 };
+        })
+
+        //var dkController2 = dkApp.controller('dkController2', ['$scope', function (dk) {
+        //    //$scope 是一个对象,也就是一个 Model(M)
+        //    dk.name = 'hero';
+        //    dk.age = 'never';
+        //    dk.obj = { name: 'hero', age: 'never' };
+        //}])
+
+        //var _scope = { name: 'dk', age: 16 };
+        //$('div[ng-bind=name]').text(_scope.name);
+        //$('div[ng-bind=age]').text(_scope.age);
+
+        //function funA() {
+        //    //(属性，实体，数据模型 =》 对象) => model(M)
+        //    this.name = 'dk';
+        //    this.age = 16;
+        //}
+        ////实例化后得到一个对象，叫做实例
+        //var _funa = new funA();
+        //console.log(_funa.name);
+    </script>
+</body>
+</html>

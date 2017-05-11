@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script src="../../../libs/angular/angular.min.js"></script>
+</head>
+
+<body ng-app="ngCustomFilterTest" ng-controller="myController">
+
+
+    <div ng-repeat="n in [] | range: 10: myFunA">{{n}}</div>
+
+    <script type="text/javascript">
+        (function () {
+            var app = angular.module('ngCustomFilterTest', []);
+            //定义控制器
+            app.controller('myController', function ($scope) {
+                $scope.myFunA = function (n) {
+                    console.log(n)
+                }
+            })
+            //定义过滤器
+            app.filter('range', function () {
+                //至少要有一个参数
+                //第一个参数 argument1 => 过滤器要处理的数据源，数据源通常是指所有对象
+                //第二个参数 argument2 =>
+                //第三个参数 argument3 =>
+                return function (array, aa, callback) {
+                    //array => []
+                    aa = parseInt(aa);
+                    for (var i = 0; i < aa; i++) {
+                        array.push(i);
+                    }
+                    // [0,1,2..]
+                    callback(array);
+                    return array;
+                }
+            })
+
+            app.filter('capitalize_as_you_want', function () {
+                //capitalize_index第几位大写
+                //specified_char指字符大写
+                return function (input, capitalize_index, specified_char) {
+                    input = input || '';
+                    var output = '';
+
+                    var customCapIndex = capitalize_index || -1;
+
+                    var specifiedChar = specified_char || '';
+
+                    for (var i = 0; i < input.length; i++) {
+                        // 首字母肯定是大写的， 指定的index的字母也大写
+                        if (i === 0 || i === customCapIndex) {
+                            output += input[i].toUpperCase();
+                        }
+                        else {
+                            // 指定的字母也大写
+                            if (specified_char != '' && input[i] === specified_char) {
+                                output += input[i].toUpperCase();
+                            }
+                            else {
+                                output += input[i];
+                            }
+                        }
+                    }
+
+                    return output;
+                };
+            });
+
+        })();
+         </script>
+</body>
+</html>

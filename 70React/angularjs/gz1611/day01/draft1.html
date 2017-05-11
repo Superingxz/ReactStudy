@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<script type="text/javascript" src="../../../../libs/angular/angular.min.js"></script>
+	<script type="text/javascript" src="../../../../libs/jquery/jquery-2.1.1.min.js"></script>
+</head>
+<body>
+	<div id="div1" dk="calc(5 + 6)"></div>
+	<div id="div2">10 + 5 + 'dk'</div>
+	<!--anuglar 在标签里的自定义属性 => 指令（ng-）-->
+	<!--一个页面有且仅有一个 ng-app 指令-->
+	<div ng-app="dkApp" >
+		<div ng-controller="dkController">
+			<span>{{50 + 50 * 3 + 'dk'}}</span>
+			<span ng-bind="50 + 50 * 3 + 'dk'"></span>
+			<span ng-bind="name"></span>
+			<span></span>
+			<span ng-bind="result"></span>
+			<span>{{result}}</span>		
+			<span ng-bind="calc('Lily')"></span>
+			<input type="text" name="" value="" placeholder="">
+			<a ng-href="{{result}}" ng-bind="result + 'aaa">{{1 + 1}} aaa</a>
+		</div>
+		<div ng-controller="dkController2">
+			<span ng-bind="name"></span>
+		</div>
+		<!--一个 ng-app 作用域里可以有多个 ng-controller(控制器)，至少有一个，但 ng-controller 本身不嵌套 ng-controller-->
+
+	</div>
+	
+	<script type="text/javascript">
+
+		//需求
+		//MVC => M：Model/Data Model(数据模型) => Object 
+		//V => View (视图，页面)
+		//C => Controller => 控制器是对业务逻辑(操作数据模型实现功能)的实现
+		//M => C => V 把数据可视化
+		//MVVM => 
+		// function _Controller(){
+		// 	var obj = [{proName: '外星人1', price: 9999},{proName: '外星人2', price: 19999}];
+		// 	obj.imgs = [{imgid: 1, imgsrc: '', proid}]
+		// 	for(var i = o ;...)
+		// }
+
+		//angularjs 本身是去 dom 操作的一个框架
+		//申明了一个 ng 的模块和控制器		
+		//对象是是一个无序的属性集合	
+		//$scope = > 服务
+		var app = angular.module('dkApp', []);
+		app.controller('dkController', ['$scope', '$http', function ($scope,$http) {
+			$scope.name = 'Sam';
+			$scope.result = 50 + 50 * 3  - 10000;
+			$scope.calc = function(_n){
+				console.log(_n);
+			}
+		}]);
+		app.controller('dkController2', function($scope){
+			$scope.name = 'Tom';
+		});
+
+		// $('span:last').text('dk')
+
+
+
+
+
+
+
+
+		var _dk = $('#div1').attr('dk');
+		window.eval(_dk);
+
+		function calc(n){
+			// console.log(n);
+		}
+		var _obj = '{"name": "dk", "age": 18}';
+		_obj = '{name: "dk", age: 18}';
+		// console.log(JSON.parse(_obj));
+		
+		//window.eval: 可以把字符串解析成 js 语法并执行
+		//window.eval('( + str + )') 可以解析不标准的 json 格式字符串
+		// console.log(window.eval('(' + _obj + ')'));
+		$('#div2').text(window.eval($('#div2').text()));
+		// window.eval('var a = 5; console.log(5)');
+	</script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="../../../libs/angular/angular.min.js"></script>
+</head>
+<body ng-app="dkApp" ng-controller="dkController">
+    <dk1></dk1> 
+    <div dk2="config"></div>
+    <div class="dk3"></div>
+    <div class="example-dk" url="www.google.com"></div>
+
+    <script type="text/javascript">
+        var app = angular.module('dkApp', []);
+        app.directive('dk1', function () {
+            return {
+                restrict: 'E',
+                template: '<h1>DK.Lan</h1>',
+                replace: false
+            }
+        })
+        app.directive('dk2', function () {
+            return {
+                restrict: 'A',
+                template: '<h1>DK.Lan</h1>',
+                replace: false,
+                link: function (scope) {
+                }
+            }
+        })
+        app.directive('dk3', function () {
+            return {
+                restrict: 'C',
+                template: '<h1>DK.Lan</h1>',
+                replace: false//true
+            }
+        })
+
+        app.directive('exampleDk', function () {
+            return {
+                restrict: 'AEC',
+                template: function (element, attrs) {
+                    return '<a href="' + attrs.url + '">' + attrs.url + '</a>';
+                },
+                replace: false//true
+            }
+        })
+
+        app.controller('dkController', function ($scope, $http) {
+        })
+    </script>
+</body>
+</html>

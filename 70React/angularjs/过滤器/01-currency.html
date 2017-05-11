@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script src="../../../libs/angular/angular.min.js"></script>
+</head>
+<body ng-app="dkApp" ng-controller="dkController">
+    <!--
+        过滤器：
+        1、从数据源中过滤出想要的数据
+        2、将数据过滤成自己想要的格式
+         -->
+
+    <p ng-bind="1 + 1 | dkFormat:'第二个参数':'第三个参数'"></p>
+    <p ng-bind="{}.name | dkLan"></p>
+    <p ng-repeat="n in {name: 'dk', age: 18} | dkLan1" ng-bind="n"></p>
+    <p ng-repeat="n in [{name: 'dk', age: 18},{name: 'dk', age: 18},{name: 'dk', age: 18} ] | filter: myFilter" ng-bind="n"></p>
+    <p>{{ 12 + 12 + 0.01 | currency}}  <!--将12格式化为货币，默认单位符号为 '$', 小数默认2位 => $12.00--></p>
+    <p>{{ 12.45 | currency:'￥'}} <!--将12.45格式化为货币，使用自定义单位符号为 '￥', 小数默认2位--></p>
+    <p>{{ 12.45 | currency:'CHY￥':3}} <!--将12.45格式化为货币，使用自定义单位符号为 'CHY￥', 小数指定1位, 会执行四舍五入操作 --></p>
+    <p>{{ 12.55 | currency:undefined:2}} <!--将12.55格式化为货币， 不改变单位符号， 小数部分将四舍五入 --></p>
+    <script type="text/javascript">
+        var dkApp = angular.module('dkApp', []);
+
+        var dkController = dkApp.controller('dkController', function ($scope) {
+            $scope.myFilter = function () {
+                console.log(arguments);
+            }
+        })
+
+        dkApp.filter('dkLan1', function () {
+            return function (_param1) {
+                //undefined
+                //{}
+                //console.log(_param1);
+                //return 'dkLan';
+                return { name: 'dk', age: 18 };
+            }
+        })
+
+        dkApp.filter('dkLan', function () {
+            return function (_param1) {
+                //console.log(_param1);
+                return 'dkLan';
+            }
+        })
+
+        //自定义过滤器
+        dkApp.filter('dkFormat', function () {
+            //第一个参数 argument1 => 过滤器要处理的数据源，数据源通常是指所有对象
+            //第二个参数 argument2 =>
+            //第三个参数 argument3 =>
+            //可以有 n 个参数，省略好多个参数
+            return function (_param1, _param2, _param3) {
+                //console.log(_param1);
+                //console.log(_param2);
+                //console.log(_param3);
+                return 'dk';
+            }
+        })
+
+        //参数: amount => 表示式结果集
+        //参数：currencySymbol => 货币符号，默认为 $
+        //参数：fractionSize => 小数长度，默认是 2 位
+        function currency(amount, currencySymbol, fractionSize) {
+            var _currencySymbol = '$';
+            var _fractionSize = 2;
+            var _amount = amount;
+            if (typeof amount === 'string') {
+                _amount = parseFloat(_amount);
+            }
+            if (typeof currencySymbol == 'undefined' && typeof fractionSize == 'undefined') {
+                return _currencySymbol + amount.toFixed(_fractionSize);
+            }
+
+            if (typeof currencySymbol == 'string') {
+                _currencySymbol = currencySymbol;
+                return _currencySymbol + amount.toFixed(_fractionSize);
+            }
+
+            if (typeof fractionSize != 'undefined') {
+                _fractionSize = _fractionSize;
+                return _currencySymbol + amount.toFixed(_fractionSize);
+            }
+        }
+
+        //(function ($) {
+        //    $.autoJQ = function (o) {
+        //        if (typeof o == 'undefined') {
+        //            return false;
+        //        }
+        //        var currObj = null; // jq 对象
+        //        var _default = {};
+        //        var opts = {};
+        //        if (typeof o == 'string') {
+        //            currObj = $(o);
+        //        } else if (typeof o == 'object') {
+        //            opts = $.extend(_default, o);
+        //            if (typeof opt.element == 'string') {
+        //                currObj = $(opts.element);
+        //            } else {
+        //                currObj = opts.element;
+        //            }
+
+        //        } else if (typeof o == 'function') {
+        //            o();
+        //        } else if (typeof o == 'undefined') {
+        //        }
+        //    }
+        //})(jQuery)
+
+        //$.autoJQ(function () {
+        //    console.log(123);
+        //})
+
+
+        //$.autoJQ({
+        //    element: 'p'
+        //})
+        //currency();
+        //currency(amount, '￥')
+        //currency(amount, '￥', 1)
+        currency(12.55, undefined, 2)
+    </script>
+</body>
+</html>

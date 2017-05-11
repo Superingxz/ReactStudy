@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <script src="../../../libs/angular/angular.min.js"></script>
+</head>
+<body ng-app="myApp" ng-controller="myCtrl">
+    <input type="text" ng-model="num1" ng-change="calc()"/> *
+    <input type="text" ng-model="num2" ng-change="calc()" /> =
+    {{result}}
+    <script type="text/javascript">
+        //module => $provider => controller|factory|service|value => directive(ng-*)
+        // 定义一个模块
+        var app = angular.module('myApp', []);
+
+        // AngularJS 中通过 provider 创建一个 service、factory等(配置阶段)。
+        //Provider 中提供了一个 factory 方法 get()，它用于返回 value|service|factory。
+        app.config(function ($provide) {
+            $provide.provider('MathService', function () {
+                this.$get = function () {
+                    var factory = {};
+
+                    factory.multiply = function (a, b) {
+                        return a * 1 * b * 1;
+                    }
+                    return factory;
+                };
+            });
+        });
+
+        // app.config([function ($provide) {
+        //     $provide.provider('dkProvider', function(){
+        //         this.$get = function(){
+        //             var obj = new Object();
+        //             return obj;
+        //         }
+        //     })
+        // }])
+
+        app.factory('dkFoctory', function () {
+            var factory = {};
+
+            factory.multiply = function (a, b) {
+                return a * 1 * b * 1;
+            }
+            return factory;
+        })
+
+        app.service('dkService', ['dkFoctory', 'dkProvider', '$http', function (dkFoctory, $http) {
+            //console.log($http);
+            this.calc = function (a, b) {
+                //return a * 1 * b * 1;
+                return dkFoctory.multiply(a, b);
+            }
+        }]);
+
+        app.controller('myCtrl', ['$scope', '$http', 'dkService', function ($scope, $http,  dkService) {
+            $scope.num1 = 0;
+            $scope.num2 = 0;
+
+            //$scope.result = MathService.multiply($scope.num1, $scope.num2);
+            $scope.result = dkService.calc($scope.num1, $scope.num2);
+
+            $scope.calc = function () {
+                //$scope.result = MathService.multiply($scope.num1, $scope.num2);
+                $scope.result = dkService.calc($scope.num1, $scope.num2);
+            }
+        }])
+    </script>
+</body>
+</html>

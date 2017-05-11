@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html lang="en"  ng-app="myApp">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <script src="angular.min.js"></script>
+    </head>
+    <body ng-controller="myController">
+        <!--M => Model => 数据模型 => Object-->
+        <!--ng-init => 相当于定义了一个对象 => var obj = {name: 'dk.lan',a: 1, b: 2}-->
+        <em>{{name}}</em>
+
+        <!--建议用 ng-bind 而不建议用 {{}} -->
+        <h1 ng-bind="name"></h1>
+
+        <!--obj.a + obj.b-->
+        <p>{{a+b}}</p>
+        
+        <!---->
+        <div ng-bind="obj.name"></div>
+        
+
+        <button id="btn">btn</button>
+        <script type="text/javascript">
+            //app 名称要一致
+            //controller 名称要一致
+            var obj =  {name: 'dk.lan', age: 18};
+            var app = angular.module('myApp', []);
+            app.controller('myController', function($scope){
+                $scope.obj = obj;
+                //ng-init="name='dk.lan';a=1;b=2"
+                $scope.name = 'dk.lan';
+                $scope.a = 1;
+                $scope.b = 2;
+                //$scope = {name='dk.lan', a=1, b=2};
+
+                
+                document.getElementById('btn').onclick = function(){
+                    obj.name = "dk";         
+                    console.log($scope.obj);
+                    $scope.$apply();
+                }
+            });
+        </script>
+    </body>
+</html>

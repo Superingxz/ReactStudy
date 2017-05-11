@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<script type="text/javascript" src="../../../../libs/angular/angular.min.js"></script>
+	<style type="text/css" media="screen">
+		img{width: 100px;}
+	</style>
+</head>
+<body ng-app="myApp">
+	<div ng-controller="myController">
+		<ul>
+			<!--for(var m = 0; m < obj.products.length; m++){var pro = obj.products[m];}-->
+			<!--ng-if 和 (ng-hide/ng-show) 的区别：ng-if 不能生成 dom 节点，而后者会生成 dom 节点-->
+			<li ng-repeat="(key,pro) in obj.products" ng-show="pro.price >= 100">
+				<span>{{pro.name}}</span>
+				<img ng-src="{{pro.img}}" alt="">
+				<h1 ng-bind="pro.name"></h1>
+				<a ng-href="{{'prodetail.html?id=' + pro.id}}" ng-bind="pro.price"></a>
+			</li>						
+		</ul>
+	</div>
+
+	<script type="text/javascript">
+		var myApp = angular.module('myApp', []);
+		myApp.controller('myController', ['$scope', '$http', function($scope, $http){
+			var obj = new Object();
+			//M => V
+			//V => M
+			// $scope.obj = obj;
+
+			// $.get('api', function(response){
+			// 	$scope.obj.products = response;
+			// })
+
+			
+			obj.products = [];
+			obj.products.push({id: 1, name: 'pro1', price: 99, img: '../../day01/img/1.jpg'});
+			obj.products.push({id: 2, name: 'pro2', price: 199, img: '../../day01/img/2.jpg'});
+			obj.products.push({id: 3, name: 'pro3', price: 299, img: '../../day01/img/3.jpg'});
+			$scope.obj = obj;
+		}])
+	</script>
+</body>
+</html>

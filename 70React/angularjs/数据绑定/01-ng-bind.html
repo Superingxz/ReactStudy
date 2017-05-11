@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script src="angular.min.js"></script>
+</head>
+<body ng-app="myApp" ng-controller="myCtrl">
+
+    <div>Name: {{user.name}}</div>
+    <div>Age: <span ng-bind="'This is ' + user.name +  'I am ' + user.age + ' years old.'"></span></div>
+
+    <script type="text/javascript">
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function ($scope) {
+            $scope.user = {
+                name: 'DK.Lan',
+                age: 18
+            }
+        })
+    </script>
+</body>
+</html>

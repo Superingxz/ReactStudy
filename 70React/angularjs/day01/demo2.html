@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <meta charset="utf-8" />
+    <script src="angular.min.js"></script>
+    <script src="angular-sanitize.min.js"></script>
+    <script src="../../../libs/jquery/jquery-2.1.1.min.js"></script>
+</head>
+<body ng-app="dkApp" ng-controller="dkController">
+    <!-- 在 ng 的世界里有一个绑定叫做 ng-bind，还有一个绑定叫做 ng-model，当然还有一个神一样存在的叫做 {{}} -->
+    <!-- ng-bind 是绑定标签文本内容，ng-model 绑定的是表单元素的值 -->
+    <div ng-bind="name"></div>
+    <div ng-bind="age2 * 1 + age * 1"></div>
+    <input type="text" ng-model="age2" value=""/><br />
+    <input type="text" ng-model="age" value="" />
+    <div ng-bind-html="content"></div>
+    <!--
+        ng-show = true|false
+        ng-hide = true|false
+        ng-if = true|false -> 表示式为 false 表示这个 dom 节点不生成
+    -->
+    <img ng-src="{{src}}" ng-if="0" />
+    <input type="button" value="btn" ng-click="funA(1,2,3)"/>
+
+    
+
+    <div ng-repeat="n in students">
+        <div ng-repeat="(key, value) in n">
+            <!--<h1 ng-bind="key"></h1>-->
+            <span>{{$index}}</span>
+        </div>
+    </div>
+
+    <!--<div ng-repeat=""></div>-->
+
+    <script type="text/javascript">
+        var dkApp = angular.module('dkApp', ['ngSanitize']);
+        //ng 服务 $scope, $http
+        var dkController = dkApp.controller('dkController', ['$scope', '$http', function ($scope, $http) {
+            $scope.name = 'dk.lan';
+            $scope.age = 18
+            $scope.age2 = 18;
+            //$scope.content = '<input type="text" />';
+            $scope.src = 'img/1.jpg';
+            $scope.src2 = 'img/2.jpg';
+
+            $scope.funA = function () {
+                //$scope.$apply();
+            }
+
+            $http.get('http://localhost/course/api/api/student/FetchAllStudent').success(function (response) {
+                $scope.student = response.data[0];
+                $scope.students = response.data;
+                //主键
+                console.log($scope.student);
+                //for (var n in $scope.student) {
+                //    console.log(n);
+                //}
+
+                //for (var i = 0; i < response.data.length; i++) {
+                //    response.data[i]['$$haskey']
+                //}
+            });
+        }])
+    </script>
+</body>
+</html>
